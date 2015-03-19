@@ -1,0 +1,76 @@
+// Variables
+
+// @font-size: 54px;
+@code-font-size: 20px;
+@font-size: 40px;
+
+// Mixins
+
+.gradient (@gradient-top: #ffffff, @gradient-bottom: #A9B0AE) {
+  background: @gradient-top; /* Old browsers */
+  background: -moz-linear-gradient(top, @gradient-top 0%, @gradient-bottom 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@gradient-top), color-stop(100%,@gradient-bottom)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, @gradient-top 0%,@gradient-bottom 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, @gradient-top 0%,@gradient-bottom 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, @gradient-top 0%,@gradient-bottom 100%); /* IE10+ */
+  background: linear-gradient(to bottom, @gradient-top 0%,@gradient-bottom 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@gradient-top', endColorstr='@gradient-bottom',GradientType=0 ); /* IE6-9 */
+}
+
+.code-block () {
+  font-size: @code-font-size !important;
+  font-family: Mensch, Consolas, Courier, monospace;
+  line-height: 120%;
+  margin-left: 30px;
+}
+
+// Rules
+
+html {
+}
+
+body {
+  font-size: @font-size;
+  background-image: url('ardentex-logo.png');
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  img {
+    height: 100px !important;
+    border: 0;
+  }
+}
+
+h1 {
+  font-size: 2em !important;
+}
+
+h2 {
+  font-size: 1.5em !important;
+}
+
+@codeMaxHeight: 600px;
+pre.sourceCode {
+  background:  transparent !important;
+  color:       black !important;
+  box-shadow:  0 0 0 0;
+  padding:     0 !important;
+  margin:      0 !important;
+  width:       100% !important;
+  max-height:  @codeMaxHeight;
+
+  code {
+    width:       100% !important;
+    background:  white !important;
+    color:       black !important;
+    line-height: 1.25em !important;
+    padding:     10px !important;
+    border:      1px solid #ddd;
+    max-height:  @codeMaxHeight;
+  }
+}
