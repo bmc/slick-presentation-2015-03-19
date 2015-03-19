@@ -49,12 +49,12 @@ Let's start out with a couple simple examples:
 ```scala
 // Using Slick's query syntax
 def allEmployees(maxSalary: Int): Seq[String] = {
-  ( for (e <- Employees if e.salary <= max ) yield ec.name ).list
+  ( for (e <- Employees if e.salary <= maxSalary ) yield ec.name ).list
 }
 
 // Using SQL string interpolation
 def allEmployees2(maxSalary: Int): Seq[String] = {
-  sql"SELECT name FROM Employees WHERE e.salary <= $max".as[String].list
+  sql"SELECT name FROM Employees WHERE e.salary <= $maxSalary".as[String].list
 }
 ```
 
@@ -140,8 +140,8 @@ q2.list
 
 ## Closed Source
 
-Supported via a special closed-source _slick-extensions_ package available
-from the Typesafe repo.
+Supported via a special _slick-extensions_ package available from the
+Typesafe repo.
 
 * DB2
 * Microsoft SQL Server
@@ -164,7 +164,7 @@ A comparison with a regular collections example clarifies.
 
 ```scala
 case class Employee(name: String, salary: Int)
-val employees: List[Coffee] = List(...) // normal collection
+val employees: List[Employee] = List(...) // normal collection
 val l = employees.filter(_.salary > 100000).map(_.name)
 //                          ^         ^            ^
 //                         Int       Int         String
@@ -173,7 +173,7 @@ class EmployeesTable(tag: Tag)
   extends Table[(String, Int, Option[String])](tag, "employees") {
    // Our previous definition
 }
-val Employees = TableQuery[Employees]
+val Employees = TableQuery[EmployeesTable]
 val q = Employees.filter(_.salary > 100000).map(_.name) // Slick query
 //                          ^         ^            ^
 //                       Rep[Int]   Rep[Int]   Rep[String]
@@ -212,7 +212,7 @@ case class Employee(name: String, salary: Int, spouse: Option[String])
 class EmployeesTable(tag: Tag) extends Table[Employee])(tag, "employees") {
   def name   = column[String]("name", O.PrimaryKey)
   def salary = column[Int]("salary")
-  def spouse = column[String]("spouse")
+  def spouse = column[Option[String]]("spouse")
   
   // Tell Slick how to pack and unpack the case class
   def * = (name, salary, spouse) <> (Employee.tupled, Employee.unapply)
@@ -284,7 +284,7 @@ class PhonesTable(tag: Tag) extends Table[Phone](tag, "phones") {
   def employeeID = column[Int]("employee_id")
   def number     = column[String]("number")
   def *          = (id.?, employeeID, number) <> (Phone.tupled, Phone.unapply)
-  def employee   = foreignKey("pn_fk_01", employeeID, EmployeesTable)(
+  def employee   = foreignKey("pn_fk_01", employeeID, Employees)(
     _.id, 
     onUpdate=ForeignKeyAction.Restrict,
     onDelete=ForeignKeyAction.Cascade,
@@ -443,7 +443,7 @@ There are others. See the Slick docs for details.
 ```scala
 Employees.delete // Oh, no! We nuked all of them!
 
-(for (e <- Employees where e.name === 'Joe Smith')).delete
+(for (e <- Employees where e.name === "Joe Smith")).delete
 ```
 
 ----------
@@ -451,10 +451,11 @@ Employees.delete // Oh, no! We nuked all of them!
 # Inserting
 
 ```scala
-// If you don't need the ID back, you operate against the "*" projection.
+// If you don't need the ID back:
 
-Employees += ("Joe Smith", 990000)
-Employees ++= Seq( ("Maria Sanchez", 200000), ("Freddie Guy", 55000) )
+Employees += Employee(None, "Joe Smith", 990000)
+Employees ++= Seq( Employee(None"Maria Sanchez", 200000), 
+                   Employee(None, "Freddie Guy", 55000) )
 
 // If you want the ID back, this is the idiom
 
@@ -477,8 +478,8 @@ and then replacing it with new data. The query must only return raw columns
 def updateEmployee(toSave: Employee) = {
   db withSession {
     val q = for (e <- Employees if e.id === toSave.id)
-            yield ((toSave.name, toSave.salary))
-    q.update((e.name, e.salary))
+            yield ((e.name, e.salary))
+    q.update((toSave.name, toSave.salary))
   }
 }
 ```
@@ -498,6 +499,7 @@ val compiledPhoneQuery = Compiled{ (empID: Column[Int]) =>
 ...
 
 compiledPhoneQuery(someEmployee.id.get).run
+compiledPhoneQuery(someOtherEmployee.id.get).run
 
 ```
 
@@ -539,9 +541,53 @@ db withSession { implicit session =>
 
 ----------
 
+# Let's try it
+
+Let's build a Slick application. Use Typesafe Activator (available at
+<http://scala-lang.org/download/> to create a minimal Scala application):
+
+```shell
+$ activator new slickness
+<bunch of messages>
+Choose from these featured templates or enter a template name:
+  1) minimal-akka-java-seed
+  2) minimal-akka-scala-seed
+  3) minimal-java
+  4) minimal-scala
+  5) play-java
+  6) play-scala
+(hit tab to see a list of all templates)
+> 4
+```
+
+----------
+
+# Add Slick
+
+In the resulting `slickness/build.sbt` file, add a dependency on Slick and
+SQLite:
+
+```scala
+libraryDependencies ++= Seq("com.typesafe.slick" %% "slick"       % "2.1.0",
+                            "org.xerial"          % "sqlite-jdbc" % "3.7.2")
+
+```
+
+----------
+
+# Stepping Outside the Presentation
+
+_Stage Direction: Presenter puts on coder hat and fires up IDE..._
+
+
 ----------
 
 # Future Slick
+
+Slick 3.0 is just around the corner. Let's look over here, to see what it
+boasts:
+
+<http://slick.typesafe.com/news/2015/02/20/slick-3.0.0-RC1-released.html>
 
 ----------
 

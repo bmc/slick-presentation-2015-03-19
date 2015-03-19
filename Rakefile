@@ -21,7 +21,7 @@ PANDOC_PDF_OPTS = [
 
 task :build => [:html, :pdf]
 
-task :html => [:css, "index.html"] do
+task :html => :css do
   tmp = Tempfile.new('slides')
   tmp.close
   begin
@@ -29,7 +29,7 @@ task :html => [:css, "index.html"] do
     sh 'pandoc', *args
 
     puts "Inserting custom stylesheet and generating slides.html"
-    File.open("slides.html", "w") do |out|
+    File.open("index.html", "w") do |out|
       File.open(tmp.path).each do |line|
         if line =~ %r{^</head>}
           custom_css = File.open('custom.css').read
@@ -50,21 +50,6 @@ task :html => [:css, "index.html"] do
 
   ensure
     tmp.unlink
-  end
-end
-
-file "index.html" do
-  File.open("index.html", "w") do |f|
-    f.puts <<-EOF
-<!doctype html>
-<head>
-<title>Oops!</title>
-</head>
-<body>
-You really want to be <a href="slides.html">here</a>.
-</body>
-</html>
-    EOF
   end
 end
 

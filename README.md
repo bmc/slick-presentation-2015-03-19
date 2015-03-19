@@ -1,4 +1,6 @@
-Source for presentation on the [Play][] Framework, given to a joint meeting of
+Source for Philly Area Scala Enthusiasts [PHASE][] presentation on Typesafe
+[Slick][]
+presentation on the [Play][] Framework, given to a joint meeting of
 the Philadelphia Java User's Group ([PhillyJUG][]) and the Philly Area Scala
 Enthusiasts ([PHASE][]) on 2 October, 2012.
 
@@ -28,7 +30,5 @@ You can view a pre-built version of this presentation at
 [Bundler]: http://gembundler.com/
 [LESS]: http://lesscss.org/
 [Pandoc]: http://johnmacfarlane.net/pandoc/
-[Play]: http://playframework.org/
-[PhillyJUG]: http://phillyjug.skookle.com/
+[Slick]: http://slick.typesafe.com/
 [PHASE]: http://scala-phase.org/
-[Slidy]: http://www.w3.org/Talks/Tools/Slidy/
