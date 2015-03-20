@@ -1,8 +1,5 @@
 Source for Philly Area Scala Enthusiasts [PHASE][] presentation on Typesafe
-[Slick][]
-presentation on the [Play][] Framework, given to a joint meeting of
-the Philadelphia Java User's Group ([PhillyJUG][]) and the Philly Area Scala
-Enthusiasts ([PHASE][]) on 2 October, 2012.
+[Slick][], given on 19 March, 2015.
 
 Requires the following software:
 
@@ -15,15 +12,14 @@ Once you have all that stuff handy, simply run:
 
     $ rake
 
-to build `slides.html`, a fully self-contained [Slidy][] slide show. Just
+to build `index.html`, a fully self-contained [Reveal.js][] slide show. Just
 open the file in your browser, and away you go.
+
+The build also creates `slides.pdf`, a PDF version of the slides.
 
 You'll find the source for the slides in `slides.md`, a Markdown file.
 For more information on using [Pandoc][] for slide generation, see
 <http://johnmacfarlane.net/pandoc/README.html#producing-slide-shows-with-pandoc>.
-
-You can view a pre-built version of this presentation at
-<http://www.ardentex.com/publications/the-play-framework/>.
 
 [Ruby]: http://www.ruby-lang.org/
 [Rake]: http://rake.rubyforge.org/
@@ -32,3 +28,4 @@ You can view a pre-built version of this presentation at
 [Pandoc]: http://johnmacfarlane.net/pandoc/
 [Slick]: http://slick.typesafe.com/
 [PHASE]: http://scala-phase.org/
+[Reveal.js]: https://github.com/hakimel/reveal.js
