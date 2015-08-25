@@ -9,41 +9,59 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" href="reveal.js/css/reveal.min.css"/>
-    <style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css"/>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
-    </style>
-    <link rel="stylesheet" href="reveal.js/css/theme/moon.css" id="theme">
-    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
-    <script>
-      if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = 'reveal.js/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-      }
-    </script>
-    <!--[if lt IE 9]>
-    <script src="reveal.js/lib/js/html5shiv.js"></script>
-    <![endif]-->
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/moon.css" id="theme">
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = 'reveal.js/css/print/pdf.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
 <style type="text/css">
 body {
   font-size: 40px;
@@ -135,7 +153,7 @@ pre code {
 <section id="some-simple-examples" class="slide level1">
 <h1>Some Simple Examples</h1>
 <p>Let’s start out with a couple simple examples:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Using Slick&#39;s query syntax</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Using Slick&#39;s query syntax</span>
 <span class="kw">def</span> <span class="fu">allEmployees</span>(maxSalary: Int): Seq[String] = {
   ( <span class="kw">for</span> (e &lt;- Employees <span class="kw">if</span> e.<span class="fu">salary</span> &lt;= maxSalary ) <span class="kw">yield</span> ec.<span class="fu">name</span> ).<span class="fu">list</span>
 }
@@ -143,12 +161,12 @@ pre code {
 <span class="co">// Using SQL string interpolation</span>
 <span class="kw">def</span> <span class="fu">allEmployees2</span>(maxSalary: Int): Seq[String] = {
   sql<span class="st">&quot;SELECT name FROM Employees WHERE e.salary &lt;= $maxSalary&quot;</span>.<span class="fu">as</span>[String].<span class="fu">list</span>
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="tables" class="slide level1">
 <h1>Tables</h1>
 <p>A table is just a class.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag) 
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag) 
   <span class="kw">extends</span> Table[(String, Int, Option[String])](tag, <span class="st">&quot;people&quot;</span>) {
 
   <span class="kw">def</span> name   = column[String](<span class="st">&quot;name&quot;</span>, O.<span class="fu">PrimaryKey</span>)
@@ -156,28 +174,28 @@ pre code {
   <span class="kw">def</span> spouse = column[Option[String]](<span class="st">&quot;spouse&quot;</span>) <span class="co">// nullable in the DB</span>
   
   <span class="kw">def</span> * = (name, salary)
-}</code></pre>
+}</code></pre></div>
 <p>The <em>base query</em> is defined on the table:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> Employees = TableQuery[EmployeesTable]</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> Employees = TableQuery[EmployeesTable]</code></pre></div>
 </section>
 <section id="its-just-a-collection" class="slide level1">
 <h1>It’s Just a Collection</h1>
 <p>The previous <code>for</code> loop is, of course, just <code>map</code> and <code>filter</code>:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= maxSalary }.<span class="fu">map</span> { _.<span class="fu">name</span> }</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= maxSalary }.<span class="fu">map</span> { _.<span class="fu">name</span> }</code></pre></div>
 <div class="fragment">
 <p>And, you get type safety:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= <span class="st">&quot;10000&quot;</span> } <span class="co">// won&#39;t compile</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= <span class="st">&quot;10000&quot;</span> } <span class="co">// won&#39;t compile</span></code></pre></div>
 </div>
 </section>
 <section id="queries-are-composable" class="slide level1">
 <h1>Queries are Composable</h1>
 <p>This query hasn’t executed yet:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> q1 = Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= maxSalary }.<span class="fu">map</span> { _.<span class="fu">name</span> }</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> q1 = Employees.<span class="fu">filter</span> { _.<span class="fu">salary</span> &lt;= maxSalary }.<span class="fu">map</span> { _.<span class="fu">name</span> }</code></pre></div>
 <div class="fragment">
 <p>…so we can augment it:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> q2 = limitOpt.<span class="fu">map</span> { limit =&gt; q1.<span class="fu">take</span>(limit) }.<span class="fu">getOrElse</span>(q1)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> q2 = limitOpt.<span class="fu">map</span> { limit =&gt; q1.<span class="fu">take</span>(limit) }.<span class="fu">getOrElse</span>(q1)
 
-q2.<span class="fu">list</span></code></pre>
+q2.<span class="fu">list</span></code></pre></div>
 </div>
 </section>
 <section id="slick-supports-various-rdbms-backends" class="slide level1">
@@ -214,7 +232,7 @@ q2.<span class="fu">list</span></code></pre>
 <section id="lifted-embedding-1" class="slide level1">
 <h1>Lifted Embedding</h1>
 <p>A comparison with a regular collections example clarifies.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(name: String, salary: Int)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(name: String, salary: Int)
 <span class="kw">val</span> employees: List[Employee] = List(...) <span class="co">// normal collection</span>
 <span class="kw">val</span> l = employees.<span class="fu">filter</span>(_.<span class="fu">salary</span> &gt; <span class="dv">100000</span>).<span class="fu">map</span>(_.<span class="fu">name</span>)
 <span class="co">//                          ^         ^            ^</span>
@@ -227,13 +245,13 @@ q2.<span class="fu">list</span></code></pre>
 <span class="kw">val</span> Employees = TableQuery[EmployeesTable]
 <span class="kw">val</span> q = Employees.<span class="fu">filter</span>(_.<span class="fu">salary</span> &gt; <span class="dv">100000</span>).<span class="fu">map</span>(_.<span class="fu">name</span>) <span class="co">// Slick query</span>
 <span class="co">//                          ^         ^            ^</span>
-<span class="co">//                       Rep[Int]   Rep[Int]   Rep[String]</span></code></pre>
+<span class="co">//                       Rep[Int]   Rep[Int]   Rep[String]</span></code></pre></div>
 <p>Plain types (and values, like 10000) are lifted into <code>Rep</code>, to allow generation of a syntax tree that captures query computations.</p>
 </section>
 <section id="tuples" class="slide level1">
 <h1>Tuples …</h1>
 <p>You can define your table with tuples, like this:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag)
   <span class="kw">extends</span> Table[(String, Int, Option[String])](tag, <span class="st">&quot;employees&quot;</span>) {
 
   <span class="kw">def</span> name   = column[String](<span class="st">&quot;name&quot;</span>, O.<span class="fu">PrimaryKey</span>)
@@ -241,12 +259,12 @@ q2.<span class="fu">list</span></code></pre>
   <span class="kw">def</span> spouse = column[Option[String]](<span class="st">&quot;spouse&quot;</span>) <span class="co">// nullable in the DB</span>
   
   <span class="kw">def</span> * = (name, salary)
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="or-case-classes" class="slide level1">
 <h1>… or Case Classes</h1>
 <p>…or with a <code>case class</code>, like this:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(name: String, salary: Int, spouse: Option[String])
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(name: String, salary: Int, spouse: Option[String])
 
 <span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag) <span class="kw">extends</span> Table[Employee])(tag, <span class="st">&quot;employees&quot;</span>) {
   <span class="kw">def</span> name   = column[String](<span class="st">&quot;name&quot;</span>, O.<span class="fu">PrimaryKey</span>)
@@ -255,7 +273,7 @@ q2.<span class="fu">list</span></code></pre>
   
   <span class="co">// Tell Slick how to pack and unpack the case class</span>
   <span class="kw">def</span> * = (name, salary, spouse) &lt;&gt; (Employee.<span class="fu">tupled</span>, Employee.<span class="fu">unapply</span>)
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="only-22-columns" class="slide level1">
 <h1>Only 22 columns?</h1>
@@ -271,7 +289,7 @@ q2.<span class="fu">list</span></code></pre>
 <section id="id-columns" class="slide level1">
 <h1>ID Columns</h1>
 <p>Columns defined as <code>Option[Type]</code> are nullable. Slick also supports case classes with optional types that map onto non-nullable columns. This capability is <em>really</em> useful for so-called synthetic keys:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(id:     Option[Int], <span class="co">// None if not saved yet</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(id:     Option[Int], <span class="co">// None if not saved yet</span>
                     name:   String,
                     ssn:    String,
                     salary: Int)
@@ -284,12 +302,12 @@ q2.<span class="fu">list</span></code></pre>
   <span class="kw">def</span> * = (id.?, name, ssn, salary) &lt;&gt; (Employee.<span class="fu">tupled</span>, Employee.<span class="fu">unapply</span>)
 <span class="co">//            ^</span>
 <span class="co">//          Makes it all compile.</span>
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="constraints" class="slide level1">
 <h1>Constraints</h1>
 <p>You can define indexes and foreign keys</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(id: Option[Int], name: String, salary: Int)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">class</span> <span class="fu">Employee</span>(id: Option[Int], name: String, salary: Int)
 <span class="kw">case</span> <span class="kw">class</span> <span class="fu">Phone</span>(id: Option[Int], employeeID: Int, number: String)
 
 <span class="kw">class</span> <span class="fu">EmployeesTable</span>(tag: Tag) <span class="kw">extends</span> Table[Employee](tag, <span class="st">&quot;employees&quot;</span>) {
@@ -309,34 +327,34 @@ q2.<span class="fu">list</span></code></pre>
     onDelete=ForeignKeyAction.<span class="fu">Cascade</span>,
   )
   <span class="kw">def</span> idx        = <span class="fu">index</span>(<span class="st">&quot;pn_fk_ix&quot;</span>, (employeeID, number), unique = <span class="kw">true</span>)
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="generating-ddl" class="slide level1">
 <h1>Generating DDL</h1>
 <p>You can have Slick generate your DDL for you. That may or may not be useful to you. (I don’t usually do that.)</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> db = <span class="co">// we haven&#39;t talked about how to do this yet</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> db = <span class="co">// we haven&#39;t talked about how to do this yet</span>
 
 <span class="kw">val</span> ddl = Employees.<span class="fu">ddl</span> ++ Phones.<span class="fu">ddl</span>
 
 db withDynSession {
   ddl.<span class="fu">drop</span>
   ddl.<span class="fu">create</span>
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="accessing-your-database" class="slide level1">
 <h1>Accessing your Database</h1>
 <p>To access your (JDBC) database, you use a Slick <code>Database</code> object, which can be created in a number of ways:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// JDBC URL</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// JDBC URL</span>
 <span class="kw">val</span> db = Database.<span class="fu">forURL</span>(<span class="st">&quot;jdbc:sqlite:my.db&quot;</span>, driver=<span class="st">&quot;org.sqlite.JDBC&quot;</span>)
 <span class="co">// A javax.sql.DataSource</span>
 <span class="kw">val</span> db = Database.<span class="fu">forDataSource</span>(dataSource)
 <span class="co">// A JNDI name</span>
-<span class="kw">val</span> db = Database.<span class="fu">forName</span>(someNameString)</code></pre>
+<span class="kw">val</span> db = Database.<span class="fu">forName</span>(someNameString)</code></pre></div>
 </section>
 <section id="each-driver-is-its-own-import" class="slide level1">
 <h1>Each Driver is its Own Import</h1>
 <p>To use Slick, you have to import the API for the driver you’re using:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">slick</span>.<span class="fu">driver</span>.<span class="fu">SQLiteDriver</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">slick</span>.<span class="fu">driver</span>.<span class="fu">SQLiteDriver</span></code></pre></div>
 <p>That’s kind of annoying: Do you really want dependencies on that driver littered throughout your code?</p>
 <div class="fragment">
 <p>No. No, you don’t.</p>
@@ -345,7 +363,7 @@ db withDynSession {
 <section id="getting-around-that-annoyance" class="slide level1">
 <h1>Getting Around That Annoyance</h1>
 <p>It’s not difficult get fix that problem. Here’s an example:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">slick</span>.<span class="fu">driver</span>.{MySQLDriver,PostgresDriver,SQLiteDriver,JdbcProfile}
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">slick</span>.<span class="fu">driver</span>.{MySQLDriver,PostgresDriver,SQLiteDriver,JdbcProfile}
 <span class="kw">import</span> scala.<span class="fu">slick</span>.<span class="fu">jdbc</span>.<span class="fu">JdbcBackend</span>.<span class="fu">Database</span>
 
 <span class="kw">class</span> <span class="fu">DAL</span>(<span class="kw">val</span> profile: JdbcProfile, db: Database)
@@ -365,12 +383,12 @@ db withDynSession {
       <span class="kw">case</span> _                       =&gt; sys.<span class="fu">error</span>(s<span class="st">&quot;No grok driver DB $driver&quot;</span>)
     }
   }
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="and-now-were-cool" class="slide level1">
 <h1>And now, we’re cool</h1>
 <p>With that code in place, we can do something like this:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesDAO</span>(dal: DAL) {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">EmployeesDAO</span>(dal: DAL) {
   <span class="kw">import</span> dal.<span class="fu">profile</span>.<span class="fu">simple</span>.<span class="fu">_</span> <span class="co">// Shhh... It&#39;s magic.</span>
   <span class="kw">import</span> dal.<span class="fu">db</span>
   <span class="kw">import</span> org.<span class="fu">example</span>.<span class="fu">thingie</span>.<span class="fu">db</span>.<span class="fu">tables</span>.<span class="fu">Employees</span> <span class="co">// the base query</span>
@@ -380,23 +398,23 @@ db withDynSession {
       (<span class="kw">for</span> (e &lt;- Employees) <span class="kw">yield</span> e).<span class="fu">list</span>
     }
   }
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="joins" class="slide level1">
 <h1>Joins</h1>
 <p>Using our previous table definitions, what if we want to get a list of all the phone numbers for a particular employee, given the employee’s name (i.e., a SQL JOIN)?</p>
 <div class="fragment">
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> name = <span class="co">// this came from somewhere...</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> name = <span class="co">// this came from somewhere...</span>
 
 <span class="kw">val</span> q = <span class="kw">for</span> { e &lt;- Employees <span class="kw">if</span> e.<span class="fu">name</span> === name
               n &lt;- Phones <span class="kw">if</span> n.<span class="fu">employeeID</span> === e.<span class="fu">id</span> }
-        <span class="kw">yield</span> n</code></pre>
+        <span class="kw">yield</span> n</code></pre></div>
 <p>Note the use of <code>===</code>. That’s required. <code>==</code> won’t work.</p>
 </div>
 </section>
 <section id="other-query-capabilities" class="slide level1">
 <h1>Other Query Capabilities</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">sortBy</span>(_.<span class="fu">name</span>.<span class="fu">desc</span>.<span class="fu">nullsFirst</span>) <span class="co">// ... ORDER BY name DESC NULLS FIRST</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">sortBy</span>(_.<span class="fu">name</span>.<span class="fu">desc</span>.<span class="fu">nullsFirst</span>) <span class="co">// ... ORDER BY name DESC NULLS FIRST</span>
 
 Employees.<span class="fu">drop</span>(<span class="dv">10</span>).<span class="fu">take</span>(<span class="dv">5</span>) <span class="co">// SELECT * FROM EMPLOYEES LIMIT 5 OFFSET 10 </span>
 
@@ -406,18 +424,18 @@ Employees.<span class="fu">map</span>(_.<span class="fu">salary</span>).<span cl
 
 Employees.<span class="fu">map</span>(_.<span class="fu">salary</span>).<span class="fu">sum</span> <span class="co">// SELECT SUM(e.salary) FROM employees e</span>
 
-Employees.<span class="fu">length</span> <span class="co">// SELECT COUNT(1) FROM employees</span></code></pre>
+Employees.<span class="fu">length</span> <span class="co">// SELECT COUNT(1) FROM employees</span></code></pre></div>
 <p>There are others. See the Slick docs for details.</p>
 </section>
 <section id="deleting" class="slide level1">
 <h1>Deleting</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">delete</span> <span class="co">// Oh, no! We nuked all of them!</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">Employees.<span class="fu">delete</span> <span class="co">// Oh, no! We nuked all of them!</span>
 
-(<span class="kw">for</span> (e &lt;- Employees where e.<span class="fu">name</span> === <span class="st">&quot;Joe Smith&quot;</span>)).<span class="fu">delete</span></code></pre>
+(<span class="kw">for</span> (e &lt;- Employees where e.<span class="fu">name</span> === <span class="st">&quot;Joe Smith&quot;</span>)).<span class="fu">delete</span></code></pre></div>
 </section>
 <section id="inserting" class="slide level1">
 <h1>Inserting</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// If you don&#39;t need the ID back:</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// If you don&#39;t need the ID back:</span>
 
 Employees += <span class="fu">Employee</span>(None, <span class="st">&quot;Joe Smith&quot;</span>, <span class="dv">990000</span>)
 Employees ++= Seq( <span class="fu">Employee</span>(None<span class="st">&quot;Maria Sanchez&quot;</span>, <span class="dv">200000</span>), 
@@ -426,24 +444,24 @@ Employees ++= Seq( <span class="fu">Employee</span>(None<span class="st">&quot;M
 <span class="co">// If you want the ID back, this is the idiom</span>
 
 <span class="kw">val</span> e = <span class="fu">Employee</span>(<span class="st">&quot;Maria Sanchez&quot;</span>, <span class="dv">200000</span>)
-<span class="kw">val</span> id = (Employees returning Employees.<span class="fu">map</span>(_.<span class="fu">id</span>)) += e</code></pre>
+<span class="kw">val</span> id = (Employees returning Employees.<span class="fu">map</span>(_.<span class="fu">id</span>)) += e</code></pre></div>
 </section>
 <section id="updates" class="slide level1">
 <h1>Updates</h1>
 <p>Updates are easy enough, though there’s a coupling issue I could live without.</p>
 <p>Updates are performed by writing a query that selects the data to update and then replacing it with new data. The query must only return raw columns (no computed values) selected from a single table.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">updateEmployee</span>(toSave: Employee) = {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">updateEmployee</span>(toSave: Employee) = {
   db withSession {
     <span class="kw">val</span> q = <span class="kw">for</span> (e &lt;- Employees <span class="kw">if</span> e.<span class="fu">id</span> === toSave.<span class="fu">id</span>)
             <span class="kw">yield</span> ((e.<span class="fu">name</span>, e.<span class="fu">salary</span>))
     q.<span class="fu">update</span>((toSave.<span class="fu">name</span>, toSave.<span class="fu">salary</span>))
   }
-}</code></pre>
+}</code></pre></div>
 </section>
 <section id="queries-can-be-compiled" class="slide level1">
 <h1>Queries can be Compiled</h1>
 <p>For instance:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> compiledPhoneQuery = Compiled{ (empID: Column[Int]) =&gt;
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> compiledPhoneQuery = Compiled{ (empID: Column[Int]) =&gt;
   <span class="kw">val</span> q = <span class="kw">for</span> { p &lt;- PhoneNumbers <span class="kw">if</span> p.<span class="fu">employeeID</span> === empID } <span class="kw">yield</span> p
   q.<span class="fu">sorted</span>(_.<span class="fu">name</span>)
 }
@@ -451,20 +469,20 @@ Employees ++= Seq( <span class="fu">Employee</span>(None<span class="st">&quot;M
 ...
 
 <span class="fu">compiledPhoneQuery</span>(someEmployee.<span class="fu">id</span>.<span class="fu">get</span>).<span class="fu">run</span>
-<span class="fu">compiledPhoneQuery</span>(someOtherEmployee.<span class="fu">id</span>.<span class="fu">get</span>).<span class="fu">run</span></code></pre>
+<span class="fu">compiledPhoneQuery</span>(someOtherEmployee.<span class="fu">id</span>.<span class="fu">get</span>).<span class="fu">run</span></code></pre></div>
 </section>
 <section id="seeing-your-statements" class="slide level1">
 <h1>Seeing your Statements</h1>
 <p>You can use logging to see the statements being issued, but you can also get them manually.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
 Employees.<span class="fu">filter</span>(_.<span class="fu">salary</span> &gt; <span class="dv">100000</span>).<span class="fu">map</span>(_.<span class="fu">name</span>).<span class="fu">selectStatement</span>
-Employees.<span class="fu">filter</span>(_.<span class="fu">id</span> === employeeID).<span class="fu">deleteStatement</span></code></pre>
+Employees.<span class="fu">filter</span>(_.<span class="fu">id</span> === employeeID).<span class="fu">deleteStatement</span></code></pre></div>
 </section>
 <section id="transactions" class="slide level1">
 <h1>Transactions</h1>
 <p>You can use the <code>Session</code> object’s <code>withTransaction</code> method to create a transaction when you need one.</p>
 <p>It takes a block that’s executed in a single transaction. Any thrown exception causes an automatic rollback, but you can force a rollback, as well.</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">db withSession { <span class="kw">implicit</span> session =&gt;
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">db withSession { <span class="kw">implicit</span> session =&gt;
   session withTransaction {
     <span class="co">// your queries go here</span>
 
@@ -473,7 +491,7 @@ Employees.<span class="fu">filter</span>(_.<span class="fu">id</span> === employ
     }
   }
 } <span class="co">// &lt;- rollback happens here, if an exception was thrown </span>
-  <span class="co">//    or session.rollback was called</span></code></pre>
+  <span class="co">//    or session.rollback was called</span></code></pre></div>
 </section>
 <section id="lets-try-it" class="slide level1">
 <h1>Let’s try it</h1>
@@ -493,8 +511,8 @@ Choose from these featured templates or enter a template name:
 <section id="add-slick" class="slide level1">
 <h1>Add Slick</h1>
 <p>In the resulting <code>slickness/build.sbt</code> file, add a dependency on Slick and SQLite:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">libraryDependencies ++= Seq(<span class="st">&quot;com.typesafe.slick&quot;</span> %% <span class="st">&quot;slick&quot;</span>       % <span class="st">&quot;2.1.0&quot;</span>,
-                            <span class="st">&quot;org.xerial&quot;</span>          % <span class="st">&quot;sqlite-jdbc&quot;</span> % <span class="st">&quot;3.7.2&quot;</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">libraryDependencies ++= Seq(<span class="st">&quot;com.typesafe.slick&quot;</span> %% <span class="st">&quot;slick&quot;</span>       % <span class="st">&quot;2.1.0&quot;</span>,
+                            <span class="st">&quot;org.xerial&quot;</span>          % <span class="st">&quot;sqlite-jdbc&quot;</span> % <span class="st">&quot;3.7.2&quot;</span>)</code></pre></div>
 </section>
 <section id="stepping-outside-the-presentation" class="slide level1">
 <h1>Stepping Outside the Presentation</h1>
@@ -514,17 +532,19 @@ Choose from these featured templates or enter a template name:
 
 
   <script src="reveal.js/lib/js/head.min.js"></script>
-  <script src="reveal.js/js/reveal.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
 
   <script>
 
       // Full list of configuration options available here:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
+        controls: true,         // Display controls in the bottom right corner
+        progress: true,         // Display a presentation progress bar
+        history: true,          // Push each slide change to the browser history
+        center: true,                       // Vertical centering of slides
+        maxScale: 1.5,                  // Bounds for smallest/largest possible content scale
+        slideNumber: false,                // Display the page number of the current slide
         theme: 'moon', // available themes are in /css/theme
         transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 
